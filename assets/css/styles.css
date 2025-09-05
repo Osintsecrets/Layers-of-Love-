@@ -1,5 +1,5 @@
 :root {
-  --bg-url: url("./assets/images/background.png");
+  --bg-url: url("../images/background.png");
   --card: rgba(255,255,255,0.8);
   --card-stroke: rgba(0,0,0,0.1);
   --shadow: 0 4px 12px rgba(0,0,0,0.06);
