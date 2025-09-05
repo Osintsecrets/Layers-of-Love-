@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
-  <title>Layers of Love</title>
-</head>
-<body>
-  <header class="site-header" role="banner">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
+    <link rel="preload" href="./assets/css/styles.css" as="style" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Layers of Love</title>
+  </head>
+  <body>
+    <div id="bg"></div>
+
+    <header class="site-header" role="banner">
     <!-- Left: language toggle -->
     <div class="lang-toggle">
       <input id="langSwitch" class="switch" type="checkbox" aria-label="Toggle language" />
@@ -35,11 +40,9 @@
         <li><a href="#" data-i18n="nav.profile">Profile</a></li>
       </ul>
     </nav>
-  </header>
+    </header>
 
-  <div id="bg"></div>
-
-  <main>
+    <main>
     <section class="hero">
       <p class="hero-line" data-i18n="heroLine">make something gentle today.</p>
       <div class="cta">
@@ -64,9 +67,13 @@
     </section>
   </main>
 
-  <script type="module" src="/assets/js/config.js"></script>
-  <script type="module" src="/assets/js/supa.js"></script>
-  <script type="module" src="/assets/js/app.js"></script>
-  <!-- IMPORTANT: You must create /assets/js/config.js by copying config.sample.js and filling values. -->
-</body>
+    <!-- If you are NOT using Supabase yet, include only app.js -->
+    <script type="module" src="./assets/js/app.js"></script>
+
+    <!-- If you ARE using Supabase/admin later, use this order instead:
+    <script type="module" src="./assets/js/config.js"></script>
+    <script type="module" src="./assets/js/supa.js"></script>
+    <script type="module" src="./assets/js/app.js"></script>
+    -->
+  </body>
 </html>
