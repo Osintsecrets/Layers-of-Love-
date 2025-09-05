@@ -1,4 +1,4 @@
-// === i18n ===
+// ===== i18n dictionary =====
 const I18N = {
   en: {
     brand: "Layers of Love",
@@ -23,85 +23,58 @@ const I18N = {
     brand: "שכבות של אהבה",
     heroLine: "ליצור משהו עדין היום.",
     "cta.ritual": "התחילי טקס של שתי דקות",
-    "cta.prompts": "גלי תזכורות ופרומפטים",
+    "cta.prompts": "גלי פרומפטים",
     "nav.today": "היום",
     "nav.prompts": "פרומפטים",
     "nav.create": "יצירה",
     "nav.paths": "מסלולים",
     "nav.gallery": "גלריה",
-    "nav.circle": "חוג",
+    "nav.circle": "מעגל",
     "nav.profile": "פרופיל",
     "pill1.title": "פרומפטים יומיים",
-    "pill1.body": "הזמנות עדינות לכתיבה, שרטוט או הקלטת קול.",
+    "pill1.body": "הזמנות עדינות לכתיבה, לשרטוט או להקלטת קול.",
     "pill2.title": "טקסים עדינים",
-    "pill2.body": "נשימה ורפלקציה לשתי דקות כדי לחזור למרכז.",
+    "pill2.body": "נשימה ורפלקציה של שתי דקות כדי לחזור למרכז.",
     "pill3.title": "הגלריה שלך",
-    "pill3.body": "פרטי כברירת מחדל—הנצחת הניצחונות השקטים שלך."
+    "pill3.body": "פרטי כברירת מחדל—שימור הניצחונות השקטים שלך."
   }
 };
 
-const langSwitch = document.getElementById('langSwitch');
+const langSwitch = document.getElementById("langSwitch");
+const hamburger = document.getElementById("hamburger");
+const mainMenu = document.getElementById("mainMenu");
+
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.en;
-  document.documentElement.setAttribute('lang', lang);
-  document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-  // Use Heebo for Hebrew-friendly rendering
-  document.body.style.fontFamily = (lang === 'he')
-    ? 'Heebo, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial'
-    : 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Inter, Arial';
+  document.documentElement.setAttribute("lang", lang);
+  document.documentElement.setAttribute("dir", lang === "he" ? "rtl" : "ltr");
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
   });
 
-  // Sync cursive brand title (keeps cursive font)
-  const brand = document.querySelector('.brand-title');
-  if (brand && dict['brand']) brand.textContent = dict['brand'];
+  const brand = document.querySelector(".brand-title");
+  if (brand && dict["brand"]) brand.textContent = dict["brand"];
 
-  localStorage.setItem('lol-lang', lang);
-  // flip toggle state
-  if (langSwitch) langSwitch.checked = (lang === 'he');
+  localStorage.setItem("lol-lang", lang);
+  if (langSwitch) langSwitch.checked = (lang === "he");
 }
 
-// Initialize language from storage or browser
-applyLang(localStorage.getItem('lol-lang') || (navigator.language?.startsWith('he') ? 'he' : 'en'));
+applyLang(localStorage.getItem("lol-lang") || (navigator.language?.startsWith("he") ? "he" : "en"));
 
-langSwitch?.addEventListener('change', (e) => {
-  applyLang(e.target.checked ? 'he' : 'en');
+langSwitch?.addEventListener("change", (e) => {
+  applyLang(e.target.checked ? "he" : "en");
 });
 
-// === Hamburger menu ===
-const hamburger = document.getElementById('hamburger');
-const mainMenu = document.getElementById('mainMenu');
+// Hamburger toggle
 function toggleMenu(open) {
-  const willOpen = typeof open === 'boolean' ? open : !mainMenu.classList.contains('open');
-  mainMenu.classList.toggle('open', willOpen);
-  hamburger.setAttribute('aria-expanded', String(willOpen));
+  const willOpen = typeof open === "boolean" ? open : !mainMenu.classList.contains("open");
+  mainMenu.classList.toggle("open", willOpen);
+  hamburger?.setAttribute("aria-expanded", String(willOpen));
 }
-hamburger?.addEventListener('click', () => toggleMenu());
-document.addEventListener('click', (e) => {
+hamburger?.addEventListener("click", () => toggleMenu());
+document.addEventListener("click", (e) => {
   if (!mainMenu.contains(e.target) && e.target !== hamburger) toggleMenu(false);
 });
-
-import { sb as sbPublic } from "./supa.js";
-
-async function loadInspiration() {
-  try {
-    const client = await sbPublic();
-    const { data, error } = await client
-      .from("inspirations")
-      .select("text,date")
-      .order("date", { ascending: false })
-      .limit(1);
-    if (error) throw error;
-    const el = document.querySelector("[data-i18n='heroLine']");
-    if (el && data && data[0]?.text) {
-      el.textContent = data[0].text;
-    }
-  } catch (e) {
-    // keep default hero line silently
-  }
-}
-loadInspiration();
 
