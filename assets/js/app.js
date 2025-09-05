@@ -158,3 +158,18 @@ loadInspiration();
     /* silent */
   }
 })();
+
+// Gentle entrance animation for cards/pills
+window.addEventListener('load', () => {
+  document.querySelectorAll('.pill, .card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(6px)';
+    el.style.transition = 'opacity .36s ease, transform .36s ease';
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 60 + i * 70);
+    });
+  });
+});
