@@ -104,8 +104,26 @@ document.addEventListener("click", (e) => {
   if (!mainMenu.contains(e.target) && e.target !== hamburger) toggleMenu(false);
 });
 
+// Simple typewriter effect
+function typeText(el, text, speed = 80) {
+  el.textContent = "";
+  el.classList.add("typing");
+  text.split("").forEach((ch, i) => {
+    setTimeout(() => {
+      el.textContent += ch;
+    }, speed * i);
+  });
+  setTimeout(() => {
+    el.classList.remove("typing");
+  }, speed * text.length);
+}
+
 // Load the latest inspiration into the homepage hero (if Supabase is configured)
 async function loadInspiration() {
+  const el = document.querySelector("[data-i18n='heroLine']");
+  if (!el) return;
+
+  let text = el.textContent;
   try {
     const { sb: sbPublic } = await import("./supa.js");
     const client = await sbPublic();
@@ -114,14 +132,13 @@ async function loadInspiration() {
       .select("text,date")
       .order("date", { ascending: false })
       .limit(1);
-    if (error) throw error;
-    const el = document.querySelector("[data-i18n='heroLine']");
-    if (el && data && data[0]?.text) {
-      el.textContent = data[0].text;
+    if (!error && data && data[0]?.text) {
+      text = data[0].text;
     }
   } catch (e) {
     // If supa.js or the table aren't available, just keep the default hero line.
   }
+  typeText(el, text);
 }
 loadInspiration();
 
