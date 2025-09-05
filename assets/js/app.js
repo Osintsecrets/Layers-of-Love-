@@ -17,7 +17,20 @@ const I18N = {
     "pill2.title": "Gentle Rituals",
     "pill2.body": "Two-minute breath and reflect moments to return to center.",
     "pill3.title": "Your Gallery",
-    "pill3.body": "Private by default—your quiet wins, saved with care."
+    "pill3.body": "Private by default—your quiet wins, saved with care.",
+    "nav.podcasts": "Podcasts",
+    "nav.social": "Social Media",
+    "nav.daily": "Daily Inspiration",
+    "nav.about": "About",
+    "podcasts.title": "Podcasts",
+    "podcasts.sub": "Listen to gentle, honest conversations about creativity, motherhood, and healing.",
+    "social.title": "Social Media",
+    "social.sub": "Find Avital’s art and updates here.",
+    "daily.title": "Daily Inspiration",
+    "daily.sub": "A gentle note from Avital, updated over time.",
+    "about.title": "Who is Avital?",
+    "about.body":
+      "A woman who embodies the true meaning of femininity and motherhood. A woman who taps into what it means to be a woman in today's modern day and age, and still connects to the women who came before her — to body and soul — in ways that heal and rejuvenate."
   },
   he: {
     brand: "שכבות של אהבה",
@@ -36,7 +49,20 @@ const I18N = {
     "pill2.title": "טקסים עדינים",
     "pill2.body": "נשימה ורפלקציה של שתי דקות כדי לחזור למרכז.",
     "pill3.title": "הגלריה שלך",
-    "pill3.body": "פרטי כברירת מחדל—שימור הניצחונות השקטים שלך."
+    "pill3.body": "פרטי כברירת מחדל—הנצחונות השקטים שלך.",
+    "nav.podcasts": "פודקאסטים",
+    "nav.social": "רשתות חברתיות",
+    "nav.daily": "השראה יומית",
+    "nav.about": "אודות",
+    "podcasts.title": "פודקאסטים",
+    "podcasts.sub": "שיחות עדינות וכנות על יצירה, אמהות וריפוי.",
+    "social.title": "רשתות חברתיות",
+    "social.sub": "כאן תמצאו את האמנות והעדכונים של אביטל.",
+    "daily.title": "השראה יומית",
+    "daily.sub": "מילים עדינות מאביטל, מתעדכנות עם הזמן.",
+    "about.title": "מי היא אביטל?",
+    "about.body":
+      "אישה שמגלמת את המשמעות האמיתית של נשיות ואימהוּת. אישה שמתחברת למהות האישה בעידן המודרני, ועדיין קשובה לנשים שלפניה — לגוף ולנפש — בדרכים שמרפאות ומחדשות."
   }
 };
 
@@ -49,7 +75,7 @@ function applyLang(lang) {
   document.documentElement.setAttribute("lang", lang);
   document.documentElement.setAttribute("dir", lang === "he" ? "rtl" : "ltr");
 
-  document.querySelectorAll("[data-i18n]").forEach(el => {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
   });
@@ -58,7 +84,7 @@ function applyLang(lang) {
   if (brand && dict["brand"]) brand.textContent = dict["brand"];
 
   localStorage.setItem("lol-lang", lang);
-  if (langSwitch) langSwitch.checked = (lang === "he");
+  if (langSwitch) langSwitch.checked = lang === "he";
 }
 
 applyLang(localStorage.getItem("lol-lang") || (navigator.language?.startsWith("he") ? "he" : "en"));
@@ -78,3 +104,57 @@ document.addEventListener("click", (e) => {
   if (!mainMenu.contains(e.target) && e.target !== hamburger) toggleMenu(false);
 });
 
+// Load the latest inspiration into the homepage hero (if Supabase is configured)
+async function loadInspiration() {
+  try {
+    const { sb: sbPublic } = await import("./supa.js");
+    const client = await sbPublic();
+    const { data, error } = await client
+      .from("inspirations")
+      .select("text,date")
+      .order("date", { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    const el = document.querySelector("[data-i18n='heroLine']");
+    if (el && data && data[0]?.text) {
+      el.textContent = data[0].text;
+    }
+  } catch (e) {
+    // If supa.js or the table aren't available, just keep the default hero line.
+  }
+}
+loadInspiration();
+
+// Populate the /inspiration.html page with a list (if present and Supabase is configured)
+(async () => {
+  const onInspirationPage =
+    location.pathname.endsWith("/inspiration.html") ||
+    location.pathname.endsWith("inspiration.html");
+
+  if (!onInspirationPage) return;
+
+  try {
+    const { sb: sbPublic } = await import("./supa.js").catch(() => ({}));
+    if (!sbPublic) return; // no supabase: skip
+    const client = await sbPublic();
+    const { data, error } = await client
+      .from("inspirations")
+      .select("text,date")
+      .order("date", { ascending: false })
+      .limit(30);
+    if (error || !data) return;
+
+    const list = document.getElementById("inspList");
+    const fb = document.getElementById("inspFallback");
+    if (list && fb) fb.remove();
+
+    data.forEach((row) => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `<h3>${row.date}</h3><p>${row.text}</p>`;
+      list?.appendChild(card);
+    });
+  } catch (_) {
+    /* silent */
+  }
+})();
