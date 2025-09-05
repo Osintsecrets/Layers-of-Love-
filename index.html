@@ -3,70 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet" />
-
-  <!-- CSS -->
-  <link rel="preload" href="./assets/css/styles.css" as="style" />
-  <link rel="stylesheet" href="./assets/css/styles.css" />
-
-  <title>Layers of Love</title>
+  <title>Design Playground</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+  <link rel="stylesheet" href="./assets/css/playground.css" />
 </head>
 <body>
-  <div id="bg"></div>
+  <header class="top-bar"><h1>Design Playground</h1></header>
+  <div class="playground">
+    <aside id="palette" aria-label="Component palette"></aside>
+    <main id="canvas" tabindex="0" aria-label="Design canvas"></main>
+  </div>
+  <div class="actions">
+    <button id="export-html">Export HTML</button>
+    <button id="export-img">Export Screenshot</button>
+  </div>
+  <textarea id="output" aria-label="Export output"></textarea>
 
-  <header class="site-header" role="banner">
-    <!-- Left: language toggle -->
-    <div class="lang-toggle">
-      <input id="langSwitch" class="switch" type="checkbox" aria-label="Toggle language" />
-    </div>
-
-    <!-- Center: cursive brand title -->
-    <h1 class="brand-title" data-i18n="brand">Layers of Love</h1>
-
-    <!-- Right: hamburger -->
-    <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mainMenu">
-      <span class="bars" aria-hidden="true"></span>
-    </button>
-
-    <!-- Dropdown menu -->
-    <nav id="mainMenu" class="menu" aria-label="Primary">
-      <ul>
-        <li><a href="./index.html" data-i18n="nav.today">Today</a></li>
-        <li><a href="./podcasts.html" data-i18n="nav.podcasts">Podcasts</a></li>
-        <li><a href="./social.html" data-i18n="nav.social">Social Media</a></li>
-        <li><a href="./inspiration.html" data-i18n="nav.daily">Daily Inspiration</a></li>
-        <li><a href="./about.html" data-i18n="nav.about">About</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <p class="hero-line" data-i18n="heroLine">make something gentle today.</p>
-      <div class="cta">
-        <a class="btn primary" href="#" aria-disabled="true" data-i18n="cta.ritual">Start 2-minute ritual</a>
-        <a class="btn ghost" href="#" aria-disabled="true" data-i18n="cta.prompts">Explore prompts</a>
-      </div>
-    </section>
-
-    <section class="pillars">
-      <div class="pill">
-        <h3 data-i18n="pill1.title">Daily Prompts</h3>
-        <p data-i18n="pill1.body">Soft, mindful invitations for writing, sketching, or voice notes.</p>
-      </div>
-      <div class="pill">
-        <h3 data-i18n="pill2.title">Gentle Rituals</h3>
-        <p data-i18n="pill2.body">Two-minute breath and reflect moments to return to center.</p>
-      </div>
-      <div class="pill">
-        <h3 data-i18n="pill3.title">Your Gallery</h3>
-        <p data-i18n="pill3.body">Private by default—your quiet wins, saved with care.</p>
-      </div>
-    </section>
-  </main>
-
-  <script type="module" src="./assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="./assets/js/playground.js"></script>
 </body>
 </html>
