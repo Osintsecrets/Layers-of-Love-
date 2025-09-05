@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layers of Love — Admin</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <style>
+    /* lightweight admin card styling on top of existing CSS */
+    .admin-wrap {
+      width: min(820px, 92%);
+      margin: 6vh auto;
+      padding: clamp(16px, 2.8vw, 28px);
+      background: var(--card);
+      border: 1px solid var(--card-stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px) saturate(125%);
+    }
+    .row { display: grid; gap: 8px; margin: 12px 0; }
+    .row label { font-weight: 600; }
+    textarea, input[type="text"], input[type="url"], button {
+      border: 1px solid var(--card-stroke);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .danger { color: #7a1f2a; font-weight: 700; }
+    .ok { color: #1f5e40; font-weight: 700; }
+    .muted { color: var(--muted); font-size: .9rem; }
+    .stack { display: grid; gap: 10px; }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
+
+  <main class="admin-wrap">
+    <h1 class="brand-title" style="justify-self:start">Layers of Love — Admin</h1>
+
+    <section class="stack">
+      <div class="row">
+        <button id="loginPasskey" class="btn">Sign in / Register (Passkey or Magic Link)</button>
+        <button id="logout" class="btn ghost">Sign out</button>
+        <div id="authState" class="muted">Not signed in</div>
+      </div>
+
+      <hr/>
+
+      <h2>Inspiration of the Day</h2>
+      <div class="row">
+        <label for="inspText">Text</label>
+        <textarea id="inspText" placeholder="Write today’s inspiration..."></textarea>
+        <button id="postInspiration" class="btn primary">Post for Today</button>
+        <div id="inspMsg" class="muted"></div>
+      </div>
+
+      <hr/>
+
+      <h2>Videos (URLs)</h2>
+      <div class="row">
+        <label for="vidTitle">Title</label>
+        <input id="vidTitle" type="text" placeholder="e.g., Watercolor grounding ritual" />
+        <label for="vidUrl">Video URL</label>
+        <input id="vidUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." />
+        <button id="addVideo" class="btn">Add Video</button>
+        <div id="vidMsg" class="muted"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>

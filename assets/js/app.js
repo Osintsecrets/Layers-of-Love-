@@ -83,3 +83,25 @@ hamburger?.addEventListener('click', () => toggleMenu());
 document.addEventListener('click', (e) => {
   if (!mainMenu.contains(e.target) && e.target !== hamburger) toggleMenu(false);
 });
+
+import { sb as sbPublic } from "./supa.js";
+
+async function loadInspiration() {
+  try {
+    const client = await sbPublic();
+    const { data, error } = await client
+      .from("inspirations")
+      .select("text,date")
+      .order("date", { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    const el = document.querySelector("[data-i18n='heroLine']");
+    if (el && data && data[0]?.text) {
+      el.textContent = data[0].text;
+    }
+  } catch (e) {
+    // keep default hero line silently
+  }
+}
+loadInspiration();
+
