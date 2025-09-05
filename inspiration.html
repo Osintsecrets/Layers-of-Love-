@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layers of Love — Daily Inspiration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+  <div id="bg"></div>
+
+  <header class="site-header" role="banner">
+    <div class="lang-toggle"><input id="langSwitch" class="switch" type="checkbox" aria-label="Toggle language" /></div>
+    <h1 class="brand-title" data-i18n="brand">Layers of Love</h1>
+    <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mainMenu"><span class="bars"></span></button>
+    <nav id="mainMenu" class="menu" aria-label="Primary">
+      <ul>
+        <li><a href="./index.html" data-i18n="nav.today">Today</a></li>
+        <li><a href="./podcasts.html" data-i18n="nav.podcasts">Podcasts</a></li>
+        <li><a href="./social.html" data-i18n="nav.social">Social Media</a></li>
+        <li><a href="./inspiration.html" data-i18n="nav.daily">Daily Inspiration</a></li>
+        <li><a href="./about.html" data-i18n="nav.about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="page-hero">
+      <h2 class="page-title" data-i18n="daily.title">Daily Inspiration</h2>
+      <p class="page-sub" data-i18n="daily.sub">A gentle note from Avital, updated over time.</p>
+    </section>
+
+    <section class="card-list" id="inspList">
+      <!-- JS will render cards here -->
+      <article class="card muted" id="inspFallback">
+        <h3>Coming soon</h3>
+        <p>This page will show a list of inspirations as Avital posts them.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- If Supabase is not configured, app.js will silently skip fetch -->
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>
