@@ -1,5 +1,5 @@
 :root {
-  --bg-url: url("/assets/images/background.png");
+  --bg-url: url("./assets/images/background.png");
   --card: rgba(255,255,255,0.8);
   --card-stroke: rgba(0,0,0,0.1);
   --shadow: 0 4px 12px rgba(0,0,0,0.06);
@@ -53,7 +53,7 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* ========== HEADER ========== */
+/* ===== HEADER / CHROME ===== */
 .site-header {
   position: sticky;
   top: 0;
@@ -68,24 +68,18 @@ body {
   border-bottom: 1px solid var(--card-stroke);
 }
 
-/* Cursive title (center) */
 .brand-title {
   justify-self: center;
   margin: 0;
-  font-family: "Great Vibes", "Dancing Script", cursive;
+  font-family: "Great Vibes", cursive;
   font-size: clamp(28px, 6.5vw, 56px);
   line-height: 1;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
   text-shadow: 0 2px 12px rgba(0,0,0,.08);
 }
 
 /* Language toggle (left) */
-.lang-toggle {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
+.lang-toggle { justify-self: start; }
 .lang-toggle .switch {
   appearance: none;
   width: 54px; height: 30px;
@@ -95,19 +89,14 @@ body {
   position: relative;
   box-shadow: var(--shadow);
   cursor: pointer;
-  transition: background .2s ease;
 }
 .lang-toggle .switch::after {
   content: "EN";
   position: absolute; inset: 2px;
   display: grid; place-items: center;
-  font-size: 12px; font-weight: 700;
-  color: var(--text);
+  font-size: 12px; font-weight: 700; color: var(--text);
 }
-.lang-toggle .switch:checked::after {
-  content: "HE";
-}
-.lang-toggle label { font-size: .9rem; color: var(--muted); }
+.lang-toggle .switch:checked::after { content: "HE"; }
 
 /* Hamburger (right) */
 .hamburger {
@@ -117,18 +106,11 @@ body {
   border: 1px solid var(--card-stroke);
   background: rgba(255,255,255,0.65);
   display: grid; place-items: center;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: transform .08s ease;
+  cursor: pointer; box-shadow: var(--shadow);
 }
-.hamburger:active { transform: translateY(1px); }
 .hamburger .bars, .hamburger .bars::before, .hamburger .bars::after {
-  content: "";
-  display: block;
-  width: 18px; height: 2px;
-  background: var(--text);
-  border-radius: 2px;
-  position: relative;
+  content: ""; display: block; width: 18px; height: 2px;
+  background: var(--text); border-radius: 2px; position: relative;
 }
 .hamburger .bars::before { position: absolute; top: -6px; }
 .hamburger .bars::after  { position: absolute; top: 6px; }
@@ -145,23 +127,14 @@ body {
   box-shadow: var(--shadow);
   overflow: hidden;
   transform-origin: top right;
-  transform: scaleY(0.9);
-  opacity: 0;
-  pointer-events: none;
+  transform: scaleY(.9); opacity: 0; pointer-events: none;
   transition: transform .18s ease, opacity .18s ease;
 }
-.menu.open {
-  transform: scaleY(1);
-  opacity: 1;
-  pointer-events: auto;
-}
+.menu.open { transform: scaleY(1); opacity: 1; pointer-events: auto; }
 .menu ul { list-style: none; margin: 0; padding: 6px; }
 .menu li a {
-  display: block;
-  padding: 12px 14px;
-  border-radius: 12px;
-  color: var(--text);
-  text-decoration: none;
+  display: block; padding: 12px 14px; border-radius: 12px;
+  color: var(--text); text-decoration: none;
 }
 .menu li a:hover { background: rgba(255,255,255,0.55); }
 
@@ -192,3 +165,10 @@ body {
 }
 .card h3 { margin: 4px 0 6px 0; font-size: 1.05rem; }
 .card.muted { opacity: .85; }
+
+/* Ensure background covers full viewport on mobile */
+#bg { background-attachment: fixed; }
+@supports (-webkit-touch-callout: none) {
+  /* iOS fallback: avoid fixed to reduce repaint costs */
+  #bg { background-attachment: scroll; }
+}

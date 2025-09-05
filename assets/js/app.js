@@ -1,4 +1,4 @@
-// === i18n ===
+// ===== i18n dictionary =====
 const I18N = {
   en: {
     brand: "Layers of Love",
@@ -29,26 +29,27 @@ const I18N = {
     "daily.title": "Daily Inspiration",
     "daily.sub": "A gentle note from Avital, updated over time.",
     "about.title": "Who is Avital?",
-    "about.body": "A woman who embodies the true meaning of femininity and motherhood. A woman who taps into what it means to be a woman in today's modern day and age, and still connects to the women who came before her — to body and soul — in ways that heal and rejuvenate."
+    "about.body":
+      "A woman who embodies the true meaning of femininity and motherhood. A woman who taps into what it means to be a woman in today's modern day and age, and still connects to the women who came before her — to body and soul — in ways that heal and rejuvenate."
   },
   he: {
     brand: "שכבות של אהבה",
     heroLine: "ליצור משהו עדין היום.",
     "cta.ritual": "התחילי טקס של שתי דקות",
-    "cta.prompts": "גלי תזכורות ופרומפטים",
+    "cta.prompts": "גלי פרומפטים",
     "nav.today": "היום",
     "nav.prompts": "פרומפטים",
     "nav.create": "יצירה",
     "nav.paths": "מסלולים",
     "nav.gallery": "גלריה",
-    "nav.circle": "חוג",
+    "nav.circle": "מעגל",
     "nav.profile": "פרופיל",
     "pill1.title": "פרומפטים יומיים",
-    "pill1.body": "הזמנות עדינות לכתיבה, שרטוט או הקלטת קול.",
+    "pill1.body": "הזמנות עדינות לכתיבה, לשרטוט או להקלטת קול.",
     "pill2.title": "טקסים עדינים",
-    "pill2.body": "נשימה ורפלקציה לשתי דקות כדי לחזור למרכז.",
+    "pill2.body": "נשימה ורפלקציה של שתי דקות כדי לחזור למרכז.",
     "pill3.title": "הגלריה שלך",
-    "pill3.body": "פרטי כברירת מחדל—הנצחת הניצחונות השקטים שלך.",
+    "pill3.body": "פרטי כברירת מחדל—הנצחונות השקטים שלך.",
     "nav.podcasts": "פודקאסטים",
     "nav.social": "רשתות חברתיות",
     "nav.daily": "השראה יומית",
@@ -60,54 +61,50 @@ const I18N = {
     "daily.title": "השראה יומית",
     "daily.sub": "מילים עדינות מאביטל, מתעדכנות עם הזמן.",
     "about.title": "מי היא אביטל?",
-    "about.body": "אישה שמגלמת את המשמעות האמיתית של נשיות ואימהוּת. אישה שמתחברת למהות האישה בעידן המודרני, ועדיין קשובה לנשים שלפניה — לגוף ולנפש — בדרכים שמרפאות ומחדשות."
+    "about.body":
+      "אישה שמגלמת את המשמעות האמיתית של נשיות ואימהוּת. אישה שמתחברת למהות האישה בעידן המודרני, ועדיין קשובה לנשים שלפניה — לגוף ולנפש — בדרכים שמרפאות ומחדשות."
   }
 };
 
-const langSwitch = document.getElementById('langSwitch');
+const langSwitch = document.getElementById("langSwitch");
+const hamburger = document.getElementById("hamburger");
+const mainMenu = document.getElementById("mainMenu");
+
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.en;
-  document.documentElement.setAttribute('lang', lang);
-  document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-  // Use Heebo for Hebrew-friendly rendering
-  document.body.style.fontFamily = (lang === 'he')
-    ? 'Heebo, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial'
-    : 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Inter, Arial';
+  document.documentElement.setAttribute("lang", lang);
+  document.documentElement.setAttribute("dir", lang === "he" ? "rtl" : "ltr");
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
   });
 
-  // Sync cursive brand title (keeps cursive font)
-  const brand = document.querySelector('.brand-title');
-  if (brand && dict['brand']) brand.textContent = dict['brand'];
+  const brand = document.querySelector(".brand-title");
+  if (brand && dict["brand"]) brand.textContent = dict["brand"];
 
-  localStorage.setItem('lol-lang', lang);
-  // flip toggle state
-  if (langSwitch) langSwitch.checked = (lang === 'he');
+  localStorage.setItem("lol-lang", lang);
+  if (langSwitch) langSwitch.checked = lang === "he";
 }
 
-// Initialize language from storage or browser
-applyLang(localStorage.getItem('lol-lang') || (navigator.language?.startsWith('he') ? 'he' : 'en'));
+applyLang(localStorage.getItem("lol-lang") || (navigator.language?.startsWith("he") ? "he" : "en"));
 
-langSwitch?.addEventListener('change', (e) => {
-  applyLang(e.target.checked ? 'he' : 'en');
+langSwitch?.addEventListener("change", (e) => {
+  applyLang(e.target.checked ? "he" : "en");
 });
 
-// === Hamburger menu ===
-const hamburger = document.getElementById('hamburger');
-const mainMenu = document.getElementById('mainMenu');
+// Hamburger toggle
 function toggleMenu(open) {
-  const willOpen = typeof open === 'boolean' ? open : !mainMenu.classList.contains('open');
-  mainMenu.classList.toggle('open', willOpen);
-  hamburger.setAttribute('aria-expanded', String(willOpen));
+  const willOpen = typeof open === "boolean" ? open : !mainMenu.classList.contains("open");
+  mainMenu.classList.toggle("open", willOpen);
+  hamburger?.setAttribute("aria-expanded", String(willOpen));
 }
-hamburger?.addEventListener('click', () => toggleMenu());
-document.addEventListener('click', (e) => {
+hamburger?.addEventListener("click", () => toggleMenu());
+document.addEventListener("click", (e) => {
   if (!mainMenu.contains(e.target) && e.target !== hamburger) toggleMenu(false);
 });
 
+// Load the latest inspiration into the homepage hero (if Supabase is configured)
 async function loadInspiration() {
   try {
     const { sb: sbPublic } = await import("./supa.js");
@@ -123,14 +120,17 @@ async function loadInspiration() {
       el.textContent = data[0].text;
     }
   } catch (e) {
-    // keep default hero line silently
+    // If supa.js or the table aren't available, just keep the default hero line.
   }
 }
 loadInspiration();
 
+// Populate the /inspiration.html page with a list (if present and Supabase is configured)
 (async () => {
-  // Only run on /inspiration.html and only if supa.js is present
-  const onInspirationPage = location.pathname.endsWith("/inspiration.html") || location.pathname.endsWith("inspiration.html");
+  const onInspirationPage =
+    location.pathname.endsWith("/inspiration.html") ||
+    location.pathname.endsWith("inspiration.html");
+
   if (!onInspirationPage) return;
 
   try {
@@ -148,7 +148,7 @@ loadInspiration();
     const fb = document.getElementById("inspFallback");
     if (list && fb) fb.remove();
 
-    data.forEach(row => {
+    data.forEach((row) => {
       const card = document.createElement("article");
       card.className = "card";
       card.innerHTML = `<h3>${row.date}</h3><p>${row.text}</p>`;
@@ -158,4 +158,3 @@ loadInspiration();
     /* silent */
   }
 })();
-
