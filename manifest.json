@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Ome TV IP Check",
+  "version": "1.0",
+  "description": "Displays IP information for peers on Ome.tv.",
+  "content_scripts": [
+    {
+      "matches": ["https://ome.tv/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": ["https://ipinfo.io/*"]
+}
